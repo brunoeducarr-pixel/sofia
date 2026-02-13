@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sofía 💖</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    background:linear-gradient(160deg,#1a1a2e,#c9184a);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+    color:white;
+}
+
+/* Pantalla inicio */
+#inicio{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#1a1a2e;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:5;
+    cursor:pointer;
+}
+
+#inicio h2{
+    font-size:28px;
+    animation:latido 1.5s infinite;
+}
+
+@keyframes latido{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+    100%{transform:scale(1);}
+}
+
+/* Contenido principal */
+.card{
+    display:none;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    border-radius:25px;
+    text-align:center;
+    width:90%;
+    max-width:700px;
+}
+
+h1{
+    font-size:40px;
+    background:linear-gradient(45deg,#ffccd5,#ff4d6d);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.typewriter{
+    overflow:hidden;
+    border-right:3px solid pink;
+    white-space:nowrap;
+    animation:typing 4s steps(60,end), blink .7s infinite;
+}
+
+@keyframes typing{
+    from{width:0}
+    to{width:100%}
+}
+
+@keyframes blink{
+    50%{border-color:transparent}
+}
+
+#contador{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.carta{
+    margin-top:20px;
+    opacity:0;
+    transition:2s;
+}
+
+.mostrar{
+    opacity:1;
+}
+
+/* Corazones */
+.heart{
+    position:absolute;
+    color:#ff4d6d;
+    animation:flotar 6s linear infinite;
+}
+
+@keyframes flotar{
+    0%{transform:translateY(0) scale(1);}
+    100%{transform:translateY(-800px) scale(1.8);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="inicio">
+<h2>💖 Toca la pantalla Sofía 💖</h2>
+<p>Hay algo especial para ti...</p>
+</div>
+
+<div class="card" id="contenido">
+
+<h1>Sofía 💖</h1>
+
+<p class="typewriter">
+Desde el 8 de diciembre de 2025 comenzó nuestra historia...
+</p>
+
+<div id="contador"></div>
+
+<div class="carta" id="carta">
+Sofía, gracias por existir en mi vida.  
+Cada día contigo es mi favorito.  
+Y si volviera a elegir, te elegiría mil veces más ❤️✨
+</div>
+
+</div>
+
+<audio id="musica" loop>
+<source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const fechaInicio = new Date("2025-12-08T00:00:00");
+
+function actualizarContador(){
+    const ahora = new Date();
+    const diferencia = ahora - fechaInicio;
+
+    const dias = Math.floor(diferencia / (1000*60*60*24));
+    const horas = Math.floor((diferencia / (1000*60*60)) % 24);
+    const minutos = Math.floor((diferencia / (1000*60)) % 60);
+    const segundos = Math.floor((diferencia / 1000) % 60);
+
+    document.getElementById("contador").innerHTML =
+    `Llevamos juntos:<br>
+    ${dias} días ${horas} horas ${minutos} minutos ${segundos} segundos ❤️`;
+
+    document.getElementById("carta").classList.add("mostrar");
+}
+
+setInterval(actualizarContador,1000);
+
+/* Inicio */
+document.getElementById("inicio").addEventListener("click", function(){
+    document.getElementById("inicio").style.display="none";
+    document.getElementById("contenido").style.display="block";
+    document.getElementById("musica").play();
+});
+
+/* Corazones flotando */
+function crearCorazon(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="❤";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(Math.random()*20+15)+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+setInterval(crearCorazon,400);
+
+/* Explosión al tocar */
+document.addEventListener("click", function(e){
+    for(let i=0;i<8;i++){
+        const heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML="❤";
+        heart.style.left=e.clientX+"px";
+        heart.style.top=e.clientY+"px";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),2000);
+    }
+});
+
+</script>
+
+</body>
+</html>
